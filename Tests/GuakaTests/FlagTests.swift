@@ -80,16 +80,17 @@ class FlagTests: XCTestCase {
   }
 
   func testItCanPrintAFlagTable2ForLocalFlags() {
-    let fs = FlagSet(
-      flags: [
+    let f = [
         Flag(shortName: "d", longName: "debugxxxxxxxxxxx", value: true, description: "Here is a desc"),
         Flag(longName: "verbose", value: 1, description: ""),
         Flag(shortName: "d", longName: "xxx", value: "123", description: "Here is a desc"),
-        ]
+    ]
+    let fs = FlagSet(
+      flags: f
     )
 
-    let flags = CommandHelp.flags(forFlagSet: fs, flags: [])
-    let description = FlagHelpGeneratorUtils.description(forFlags: flags.global)
+    let flags = CommandHelp.flags(forFlagSet: fs, flags: f)
+    let description = FlagHelpGeneratorUtils.description(forFlags: flags.local.sorted { $0.longName < $1.longName })
 
     XCTAssertEqual(description
       , "  -d, --debugxxxxxxxxxxx   Here is a desc \n      --verbose int        (default 1)\n  -d, --xxx string         Here is a desc (default 123)")
@@ -139,7 +140,7 @@ class FlagTests: XCTestCase {
 
     let flags = CommandHelp.flags(forFlagSet: fs, flags: [])
 
-    let description = FlagHelpGeneratorUtils.description(forFlags: flags.global)
+    let description = FlagHelpGeneratorUtils.description(forFlags: flags.global.sorted { $0.longName < $1.longName })
 
     XCTAssertEqual(description
       , "  -d, --debugxxxxxxxxxxx   Here is a desc \n      --verbose int        (default 1)\n  -d, --xxx string         Here is a desc (default 123)")

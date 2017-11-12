@@ -180,7 +180,8 @@ extension HelpGenerator {
   }
 
   public var localFlagsSection: String? {
-    let localFlagsDescription = FlagHelpGeneratorUtils.description(forFlags: commandHelp.localFlags)
+    let sortedLocalFlags = commandHelp.localFlags.sorted { $0.longName < $1.longName }
+    let localFlagsDescription = FlagHelpGeneratorUtils.description(forFlags: sortedLocalFlags)
     guard localFlagsDescription != "" else {
       return nil
     }
@@ -193,7 +194,8 @@ extension HelpGenerator {
   }
 
   public var globalFlagsSection: String? {
-    let globalFlagsDescription = FlagHelpGeneratorUtils.description(forFlags: commandHelp.globalFlags)
+    let sortedGlobalFlags = commandHelp.globalFlags.sorted { $0.longName < $1.longName }
+    let globalFlagsDescription = FlagHelpGeneratorUtils.description(forFlags: sortedGlobalFlags)
     guard globalFlagsDescription != "" else {
       return nil
     }

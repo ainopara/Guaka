@@ -153,9 +153,8 @@ public struct CommandHelp {
 
   static func flags(forFlagSet flagSet: FlagSet, flags: [Flag]) -> (local: [FlagHelp], global: [FlagHelp]) {
 
-    let localFlags = flags.sorted { $0.longName < $1.longName }.map { FlagHelp (flag: $0) }
-    let globalFlags = flagSet.globalFlags(withLocalFlags: flags)
-      .sorted { $0.longName < $1.longName }.map { FlagHelp (flag: $0) }
+    let localFlags = flags.map { FlagHelp (flag: $0) }
+    let globalFlags = flagSet.globalFlags(withLocalFlags: flags).map { FlagHelp (flag: $0) }
 
     return (localFlags, globalFlags)
   }

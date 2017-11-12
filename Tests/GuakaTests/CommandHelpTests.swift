@@ -82,14 +82,14 @@ class CommandHelpTests: XCTestCase {
     let ch = CommandHelp(command: show)
 
     XCTAssertEqual(ch.globalFlags.count, 3)
-    XCTAssertEqual(ch.globalFlags.map({ $0.longName }), ["debug", "remote", "verbose"])
+    XCTAssertEqual(ch.globalFlags.map({ $0.longName }), ["remote", "debug", "verbose"])
   }
 
   func testCommandThatHasLocalFlags() {
     let ch = CommandHelp(command: show)
 
     XCTAssertEqual(ch.localFlags.count, 3)
-    XCTAssertEqual(ch.localFlags.map({ $0.longName }), ["bar", "foo", "yy"])
+    XCTAssertEqual(ch.localFlags.map({ $0.longName }), ["foo", "bar", "yy"])
   }
 
   func testGeneratesFullName() {
