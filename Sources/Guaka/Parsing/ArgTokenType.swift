@@ -25,6 +25,7 @@ enum ArgTokenType {
   case shortMultiFlag(String)
   case invalidFlag(String)
   case positionalArgument(String)
+  case endMark
 
   /// Is the token a boolean flag
   var isFlag: Bool {
@@ -80,8 +81,9 @@ enum ArgTokenType {
   }
 
   init(fromString string: String) {
-
-    if string.isPrefixed(by: "---") {
+    if string == "--" {
+        self = .endMark
+    } else if string.isPrefixed(by: "---") {
 
       self = .invalidFlag(string)
     } else if string.isPrefixed(by: "--") {

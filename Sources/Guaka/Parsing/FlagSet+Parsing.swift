@@ -40,6 +40,9 @@ extension FlagSet {
 
       switch token {
 
+      case .endMark:
+        break
+
       case let .longFlagWithEqual(name, value):
         let flag = try getFlag(forName: name)
         try ret[flag] = flag.convertValueToInnerType(value: value)
@@ -159,6 +162,9 @@ extension FlagSet {
       fallthrough
     case .shortMultiFlag(_):
       return true
+
+    case .endMark:
+        return false
 
     case let .shortFlag(name):
       return isBool(flagName: name)
